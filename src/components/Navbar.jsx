@@ -143,7 +143,8 @@ const handleLinkClick = () => {
   return (
     <nav className="navbar navbar-expand-lg fixed-top bg-white shadow-sm" ref={navbarRef}>
       <div className="container-fluid">
-        <a className="navbar-brand">
+        <a className="navbar-brand"
+           href={`${isUserLoggedIn ? '/' : '/login'}`}>
           SnapMart
         </a>
         <button
@@ -213,11 +214,6 @@ const handleLinkClick = () => {
 
           
           <div className="d-flex align-items-center">
-            { !isUserLoggedIn &&
-            <a href="/login" className="nav-link text-dark me-3" onClick={handleLinkClick}>
-              Login
-            </a>
-            }
             <a href="/cart" className="nav-link text-dark me-3" onClick={handleLinkClick}>
               <i className="bi bi-cart me-1"></i>
               Cart
