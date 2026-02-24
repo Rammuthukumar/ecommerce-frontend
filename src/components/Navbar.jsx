@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AppContext from "../Context/Context";
 
 const Navbar = ({ onSelectCategory }) => {
   const getInitialTheme = () => {
@@ -18,6 +19,7 @@ const Navbar = ({ onSelectCategory }) => {
   const [showNoProductsMessage, setShowNoProductsMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+
   // 2. Add these new state variables
 const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 const navbarRef = useRef(null);
@@ -25,7 +27,13 @@ const navbarRef = useRef(null);
   const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
+  
+  const {token} = useContext(AppContext);
+  const isUserLoggedIn = !!token;
+
+
   useEffect(() => {
+   // if(token !== '' || user !== '') setIsUserLoggedIn(true);
     fetchInitialData();
   }, []);
 
@@ -205,10 +213,16 @@ const handleLinkClick = () => {
 
           
           <div className="d-flex align-items-center">
+            { !isUserLoggedIn &&
+            <a href="/login" className="nav-link text-dark me-3" onClick={handleLinkClick}>
+              Login
+            </a>
+            }
             <a href="/cart" className="nav-link text-dark me-3" onClick={handleLinkClick}>
               <i className="bi bi-cart me-1"></i>
               Cart
             </a>
+           
             <form className="d-flex" role="search" onSubmit={handleSubmit} id="searchForm">
               <input
                 className="form-control me-2"

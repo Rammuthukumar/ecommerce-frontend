@@ -8,10 +8,12 @@ const Home = ({ selectedCategory }) => {
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastProduct, setToastProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isDataFetched) {
       refreshData();
+      setLoading(false);
       setIsDataFetched(true);
     }
   }, [refreshData, isDataFetched]);
@@ -59,6 +61,18 @@ const Home = ({ selectedCategory }) => {
   const filteredProducts = selectedCategory
     ? data.filter((product) => product.category === selectedCategory)
     : data;
+
+  if (loading) {
+    return (
+      <div className="container mt-5 pt-5">
+        <div className="d-flex justify-content-center align-items-center" style={{ height: "300px" }}>
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isError) {
     return (
